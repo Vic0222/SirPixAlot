@@ -1,0 +1,11 @@
+{
+  "TemplatePath": null,
+  "ContainerSettings": {
+    "Registry": "docker.io",
+    "RepositoryPrefix": "vic0111",
+    "Tags": [
+      "latest"
+    ],
+    "Builder": "docker"
+  }
+}
