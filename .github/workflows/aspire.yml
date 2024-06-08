@@ -32,7 +32,7 @@ jobs:
       run: dotnet tool install -g aspirate --prerelease
     - name: Generate k8s yaml
       working-directory: ./SirPixAlot.Aspire.AppHost/
-      run: aspirate generate --disable-secrets
+      run: aspirate generate --non-interactive --disable-secrets --include-dashboard
     - uses: actions/upload-artifact@v4
       with:
         name: aspirate-output
