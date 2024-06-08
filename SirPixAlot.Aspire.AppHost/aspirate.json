@@ -1,8 +1,8 @@
 {
   "TemplatePath": null,
   "ContainerSettings": {
-    "Registry": "ghcr.io",
-    "RepositoryPrefix": "vic0222",
+    "Registry": "docker.io",
+    "RepositoryPrefix": "vic0111",
     "Tags": [
       "latest"
     ],
