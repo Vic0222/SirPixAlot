@@ -13,6 +13,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name:  sirpixalotwebapi
+                name:  aspire-dashboard
                 port:
-                  number: 8080
+                  number: 18888
