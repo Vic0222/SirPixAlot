@@ -38,6 +38,9 @@ jobs:
     - name: Generate k8s yaml
       working-directory: ./SirPixAlot.Aspire.AppHost/
       run: aspirate generate --non-interactive --disable-secrets --include-dashboard --image-pull-policy IfNotPresent 
+    - name: Copy ingress
+      working-directory: ./SirPixAlot.Aspire.AppHost/
+      run: cp ingress.yaml ./aspirate-output/
     - name: List docker images
       run: docker images
     - uses: actions/upload-artifact@v4
