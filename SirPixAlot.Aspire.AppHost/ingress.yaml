@@ -1,9 +1,10 @@
 ﻿---
-apiVersion: helm.cattle.io/v1
-kind: HelmChartConfig
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: traefik
-  namespace: kube-system
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
     - http:
