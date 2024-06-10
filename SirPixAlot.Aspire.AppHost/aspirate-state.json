@@ -1,0 +1,29 @@
+{
+  "projectPath": ".",
+  "outputPath": "aspirate-output",
+  "containerRegistry": "docker.io",
+  "containerImageTags": [
+    "latest"
+  ],
+  "containerBuilder": "docker",
+  "containerRepositoryPrefix": "vic0111",
+  "outputFormat": "kustomize",
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "includeDashboard": true,
+  "secrets": {
+    "salt": "H/1BFC\u002Bf2cS25SVc",
+    "hash": "dW4lAtOA28w/0hBZKH44IO90PYQHQLVaIFt9gqnYx0E=",
+    "secrets": {
+      "EventStoreConfig-SirPixAlotGrainStorage": {
+        "value": "H/1BFC\u002Bf2cS25SVcHoEe\u002BWE5ivWlp7AJbnqTIqoEM31mQ2rDs0WaSDU1EvbICQ4NBIk="
+      },
+      "AwsAccessKeyId": {
+        "value": "H/1BFC\u002Bf2cS25SVcpGlR9xt50o73USH5sCQu5dksNl5OWEjKr0KWXy0VGA=="
+      },
+      "AwsSecretAccessKey": {
+        "value": "H/1BFC\u002Bf2cS25SVc2AC2lpMEwjrPI61ugNg1brgaMn5qWFnKqHC\u002BWTEvD\u002B7ZHw=="
+      }
+    }
+  },
+  "processAllComponents": true
+}
