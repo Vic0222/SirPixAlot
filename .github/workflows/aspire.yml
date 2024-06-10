@@ -37,7 +37,7 @@ jobs:
       run: dotnet tool install -g aspirate --prerelease
     - name: Generate k8s yaml
       working-directory: ./SirPixAlot.Aspire.AppHost/
-      run: aspirate generate --non-interactive --disable-secrets --include-dashboard --image-pull-policy IfNotPresent --output-path "./deployment/aspirate-output/"
+      run: aspirate generate --non-interactive --secret-password "testS" --include-dashboard --image-pull-policy IfNotPresent --output-path "./deployment/aspirate-output/"
     - name: Copy cluster 
       working-directory: ./SirPixAlot.Aspire.AppHost/
       run: cp -r ./cluster-config/* ./deployment
