@@ -4,8 +4,3 @@
 
 generatorOptions:
   disableNameSuffixHash: true
-
-secretGenerator:
-- name: aws-credential
-  envs:
-  - .aws.env.secret

@@ -8,20 +8,22 @@
   "containerBuilder": "docker",
   "containerRepositoryPrefix": "vic0111",
   "outputFormat": "kustomize",
+  "skipFinalKustomizeGeneration": false,
   "privateRegistryEmail": "aspir8@aka.ms",
   "includeDashboard": true,
+  "useCustomNamespace": false,
   "secrets": {
-    "salt": "H/1BFC\u002Bf2cS25SVc",
-    "hash": "dW4lAtOA28w/0hBZKH44IO90PYQHQLVaIFt9gqnYx0E=",
+    "salt": "nqDsxIdtF8BebDX7",
+    "hash": "Der9U8TdJwEkh5hVgF9Y9ttCxad66is4hdxlrMs8hzc=",
     "secrets": {
       "EventStoreConfig-SirPixAlotGrainStorage": {
-        "value": "H/1BFC\u002Bf2cS25SVcHoEe\u002BWE5ivWlp7AJbnqTIqoEM31mQ2rDs0WaSDU1EvbICQ4NBIk="
+        "value": "nqDsxIdtF8BebDX7NOL\u002BWcfmwBXk4oXrTpXbeV/mdDtBHoJQ\u002BvVCU2sC0sluRlsAodM="
       },
-      "AwsAccessKeyId": {
-        "value": "H/1BFC\u002Bf2cS25SVcpGlR9xt50o73USH5sCQu5dksNl5OWEjKr0KWXy0VGA=="
+      "ConnectionString-PlaceHolder": {
+        "value": "nqDsxIdtF8BebDX7QDQDTtpOqOKM2Q710RZDZlzjZwhNLqxQ8eR3"
       },
-      "AwsSecretAccessKey": {
-        "value": "H/1BFC\u002Bf2cS25SVc2AC2lpMEwjrPI61ugNg1brgaMn5qWFnKqHC\u002BWTEvD\u002B7ZHw=="
+      "SirPixAlotWebAPI": {
+        "ConnectionString__PlaceHolder": "nqDsxIdtF8BebDX7QDQDTtpOqOKM2Q710RZDZlzjZwhNLqxQ8eR3"
       }
     }
   },
