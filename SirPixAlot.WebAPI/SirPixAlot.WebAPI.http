@@ -1,6 +1,7 @@
 ###
-@HostAddress = https://localhost:7037
-GET {{SirPixAlot.WebAPI_HostAddress}}/weatherforecast
+#@HostAddress = http://localhost:7037
+@HostAddress = http://13.251.68.209:80
+GET {{HostAddress}}/weatherforecast
 Accept: application/json
 
 ###
