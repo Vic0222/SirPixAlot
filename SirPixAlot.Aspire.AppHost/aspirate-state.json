@@ -10,7 +10,7 @@
   "outputFormat": "kustomize",
   "skipFinalKustomizeGeneration": false,
   "privateRegistryEmail": "aspir8@aka.ms",
-  "includeDashboard": true,
+  "includeDashboard": false,
   "useCustomNamespace": false,
   "secrets": {
     "salt": "nqDsxIdtF8BebDX7",
