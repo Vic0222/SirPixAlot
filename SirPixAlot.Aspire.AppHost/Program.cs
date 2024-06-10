@@ -2,9 +2,11 @@ using Aspire.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
+var grainStorage = builder.AddParameter("EventStoreConfig__SirPixAlotGrainStorage");
+var testSecret = builder.AddParameter("testSecret",secret: true);
+
 var sirPixAlotWebAPI =  builder.AddProject<Projects.SirPixAlot_WebAPI>("SirPixAlotWebAPI");
-if (builder.Environment.EnvironmentName == "Production")
-{
-    sirPixAlotWebAPI.WithEnvironment("EventStoreConfig__SirPixAlotGrainStorageDev", "SirPixAlotGrainStorage");
-}
+sirPixAlotWebAPI.WithEnvironment("EventStoreConfig__SirPixAlotGrainStorage", grainStorage);
+sirPixAlotWebAPI.WithEnvironment("testSecret", testSecret);
+
 builder.Build().Run();
