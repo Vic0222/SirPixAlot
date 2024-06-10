@@ -37,13 +37,13 @@ jobs:
       run: dotnet tool install -g aspirate --prerelease
     - name: Generate k8s yaml
       working-directory: ./SirPixAlot.Aspire.AppHost/
-      run: aspirate generate --non-interactive --disable-secrets --include-dashboard --image-pull-policy IfNotPresent 
+      run: aspirate generate --non-interactive --disable-secrets --include-dashboard --image-pull-policy IfNotPresent --output-path "./deployment/aspirate-output/"
     - name: Copy ingress
       working-directory: ./SirPixAlot.Aspire.AppHost/
-      run: cp ingress.yaml ./aspirate-output/
+      run: cp -r ./cluster-config ./deployment
     - name: List docker images
       run: docker images
     - uses: actions/upload-artifact@v4
       with:
         name: aspirate-output
-        path: ./SirPixAlot.Aspire.AppHost/aspirate-output/
+        path: ./SirPixAlot.Aspire.AppHost/deployment/aspirate-output/

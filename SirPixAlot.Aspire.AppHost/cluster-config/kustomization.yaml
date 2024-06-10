@@ -1,0 +1,11 @@
+﻿resources:
+- aspirate-output
+- ingress.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+- name: aws-credential
+  envs:
+  - .aws.env.secret
