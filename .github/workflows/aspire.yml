@@ -46,4 +46,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: aspirate-output
-        path: ./SirPixAlot.Aspire.AppHost/deployment/aspirate-output/
+        path: ./SirPixAlot.Aspire.AppHost/deployment/
