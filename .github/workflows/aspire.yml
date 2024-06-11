@@ -65,8 +65,7 @@ jobs:
       with: 
         path: ./SirPixAlot.Aspire.AppHost/deployment/
     - name: Create WebAPi Secrets
-      run: echo "${{ secrets.SIRPIXALOTWEBAPI_SECRETS_TEST }}" >> "./deployment/aspirate-output/SirPixAlotWebAPI.sirpixalotwebapi.secrets"
-    - uses: actions/upload-artifact@v4
-      with:
-        name: aspirate-output
-        path: ./deployment/aspirate-output/SirPixAlotWebAPI.sirpixalotwebapi.secrets
+      run: |
+        echo "${{ secrets.SIRPIXALOTWEBAPI_SECRETS_TEST }}" >> "./deployment/aspirate-output/SirPixAlotWebAPI.sirpixalotwebapi.secrets"
+        cat "./deployment/aspirate-output/SirPixAlotWebAPI.sirpixalotwebapi.secrets"
+
