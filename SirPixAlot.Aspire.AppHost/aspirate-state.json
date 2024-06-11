@@ -13,17 +13,20 @@
   "includeDashboard": false,
   "useCustomNamespace": false,
   "secrets": {
-    "salt": "nqDsxIdtF8BebDX7",
-    "hash": "Der9U8TdJwEkh5hVgF9Y9ttCxad66is4hdxlrMs8hzc=",
+    "salt": "kgG8rQmTmk7T2Ztv",
+    "hash": "SBgb1HxTrE/NnNdlyrYsP3jczKx6K1\u002BIvfSD8xPnGx8=",
     "secrets": {
       "EventStoreConfig-SirPixAlotGrainStorage": {
-        "value": "nqDsxIdtF8BebDX7NOL\u002BWcfmwBXk4oXrTpXbeV/mdDtBHoJQ\u002BvVCU2sC0sluRlsAodM="
+        "value": "kgG8rQmTmk7T2Ztvk1CWRelS0NvgewBb6ZtoZD8q7hl\u002BRQCaYI0PujhFuaIq/oFgGJA="
+      },
+      "AwsRegion": {
+        "value": "kgG8rQmTmk7T2ZtvYIMupZu1gczdlgHiNrtZEA0zsTp4SDWeapg7vHQd"
       },
       "ConnectionString-PlaceHolder": {
-        "value": "nqDsxIdtF8BebDX7QDQDTtpOqOKM2Q710RZDZlzjZwhNLqxQ8eR3"
+        "value": "kgG8rQmTmk7T2ZtvvDT7duj3zi6SkMbqOKHpcTwv/SpydS6aa5w6"
       },
       "SirPixAlotWebAPI": {
-        "ConnectionString__PlaceHolder": "nqDsxIdtF8BebDX7QDQDTtpOqOKM2Q710RZDZlzjZwhNLqxQ8eR3"
+        "ConnectionString__PlaceHolder": "kgG8rQmTmk7T2ZtvvDT7duj3zi6SkMbqOKHpcTwv/SpydS6aa5w6"
       }
     }
   },
