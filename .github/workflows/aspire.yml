@@ -61,8 +61,8 @@ jobs:
         path: ./SirPixAlot.Aspire.AppHost/deployment/
     - name: Create WebAPi Secrets
       run: |
-        echo "${{ secrets.SIRPIXALOTWEBAPI_SECRETS }}" >> "./deployment/aspirate-output/aspirate-output/SirPixAlotWebAPI.sirpixalotwebapi.secrets"
-        cat "./deployment/aspirate-output/aspirate-output/SirPixAlotWebAPI.sirpixalotwebapi.secrets"
+        echo "${{ secrets.SIRPIXALOTWEBAPI_SECRETS }}" >> "./deployment/aspirate-output/aspirate-output/SirPixAlotWebAPI/.sirpixalotwebapi.secrets"
+        cat "./deployment/aspirate-output/aspirate-output/SirPixAlotWebAPI/.sirpixalotwebapi.secrets"
     - name: Check folder structure
       run: |
         sudo apt install tree
