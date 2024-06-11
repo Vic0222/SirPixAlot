@@ -59,6 +59,10 @@ jobs:
     - uses: actions/download-artifact@v4.1.4
       with: 
         path: ./SirPixAlot.Aspire.AppHost/deployment/
+    - name: Check folder structure
+      run: |
+        sudo apt install tree
+        tree .
     - name: Create WebAPi Secrets
       run: |
         echo "${{ secrets.SIRPIXALOTWEBAPI_SECRETS }}" >> "./deployment/aspirate-output/SirPixAlotWebAPI.sirpixalotwebapi.secrets"
@@ -67,5 +71,5 @@ jobs:
       env:
         KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
       with:
-        args: apply -k ./SirPixAlot/SirPixAlot.Aspire.AppHost/deployment/
+        args: apply -k SirPixAlot.Aspire.AppHost/deployment/
 
