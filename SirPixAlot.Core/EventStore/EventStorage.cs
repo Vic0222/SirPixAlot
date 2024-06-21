@@ -4,8 +4,10 @@ using Amazon.Runtime.Internal.Transform;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Orleans.Runtime;
+using SirPixAlot.Core.Metrics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace SirPixAlot.Core.EventStore
         Task<bool> SaveEvents(IReadOnlyCollection<Event> events);
     }
 
-    public class EventStorage(ILogger<EventStorage> logger, IOptions<EventStoreConfig> options, IAmazonDynamoDB amazonDynamoDBClient) : IEventStorage
+    public class EventStorage(ILogger<EventStorage> logger, IOptions<EventStoreConfig> options, IAmazonDynamoDB amazonDynamoDBClient, SirPixAlotMetrics sirPixAlotMetrics) : IEventStorage
     {
         
 
@@ -70,25 +72,18 @@ namespace SirPixAlot.Core.EventStore
             }
             catch (Exception exc)
             {
-                logger.LogWarning(
-                    (int)ErrorCode.StorageProviderBase,
-                    exc,
-                    "Intermediate error bulk inserting entries to table {TableName}.",
+                logger.LogError(exc, "Intermediate error bulk inserting entries to table {TableName}.",
                     tableName);
                 throw;
             }
-
             return true;
         }
 
         public async Task<List<Event>> ReadEvents(string grainId, int version)
         {
-
+            var stopwatch = Stopwatch.StartNew();
             string tableName = options.Value.Table;
-            if (logger.IsEnabled(LogLevel.Trace))
-            {
-                logger.LogTrace("Read events {TableName} table", tableName);
-            }
+            logger.LogInformation("Read events {TableName} table", tableName);
             try
             {
                 var query = new QueryRequest()
@@ -120,10 +115,16 @@ namespace SirPixAlot.Core.EventStore
                 }
                 return events.OrderBy(e => e.Version).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                if (logger.IsEnabled(LogLevel.Debug)) logger.LogDebug("Unable to find table entry for grainId = {grainId}", grainId);
+                logger.LogError(ex, "Unable to find table entry for grainId = {grainId}", grainId);
                 throw;
+            }
+            finally
+            {
+                stopwatch.Stop();
+                logger.LogInformation("Read events duration, {ReadEventsDuration}", stopwatch.ElapsedMilliseconds);
+                sirPixAlotMetrics.GrainReadEventsDuration(stopwatch.ElapsedMilliseconds);
             }
         }
 

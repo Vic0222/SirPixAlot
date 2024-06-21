@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Orleans.Serialization;
 using Orleans.Storage;
 using SirPixAlot.Core.EventStore;
+using SirPixAlot.Core.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Host.UseOrleans(static siloBuilder =>
 
     siloBuilder.Services.AddSingleton<IAmazonDynamoDB>(svc => new AmazonDynamoDBClient());
     siloBuilder.Services.AddSingleton<IEventStorage, EventStorage>();
+    siloBuilder.Services.AddSingleton<SirPixAlotMetrics>();
     siloBuilder.Services.Configure<EventStoreConfig>(siloBuilder.Configuration.GetSection("EventStoreConfig"));
 
 });
