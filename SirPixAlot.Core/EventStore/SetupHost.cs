@@ -61,7 +61,12 @@ namespace SirPixAlot.Core.EventStore
                       KeyType = "RANGE"
                     },
                 },
-                BillingMode = BillingMode.PAY_PER_REQUEST,
+                ProvisionedThroughput = new ProvisionedThroughput
+                {
+                    ReadCapacityUnits = 20,
+                    WriteCapacityUnits = 20
+                },
+                BillingMode = BillingMode.PROVISIONED,
             };
 
             var response = await amazonDynamoDBClient.CreateTableAsync(request);
