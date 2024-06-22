@@ -13,20 +13,23 @@
   "includeDashboard": false,
   "useCustomNamespace": false,
   "secrets": {
-    "salt": "kgG8rQmTmk7T2Ztv",
-    "hash": "SBgb1HxTrE/NnNdlyrYsP3jczKx6K1\u002BIvfSD8xPnGx8=",
+    "salt": "hV2ugCdSuGSGNljd",
+    "hash": "lgDZbINpOEePNkJkndiKdU5R7vTWcDbn4JmdjholOAY=",
     "secrets": {
       "EventStoreConfig-SirPixAlotGrainStorage": {
-        "value": "kgG8rQmTmk7T2Ztvk1CWRelS0NvgewBb6ZtoZD8q7hl\u002BRQCaYI0PujhFuaIq/oFgGJA="
+        "value": "hV2ugCdSuGSGNljdyo43sbO0KlsBX75YOqLwHtDcszyKAsXlfmyG9wykyCplF4P8BB0="
       },
       "AwsRegion": {
-        "value": "kgG8rQmTmk7T2ZtvYIMupZu1gczdlgHiNrtZEA0zsTp4SDWeapg7vHQd"
+        "value": "hV2ugCdSuGSGNljd6kXCi4vm\u002BEmFWQL2ojSaBOLF7B\u002BMD/DhdHmy8UD8"
+      },
+      "LibsqlDatabaseClientOptions-ReplicaPath": {
+        "value": "hV2ugCdSuGSGNljdRv4/8zeqJL9wJVywRA4\u002BzazBrBzMFuvqcHSe9wi9yhByGd/5AQ=="
       },
       "ConnectionString-PlaceHolder": {
-        "value": "kgG8rQmTmk7T2ZtvvDT7duj3zi6SkMbqOKHpcTwv/SpydS6aa5w6"
+        "value": "hV2ugCdSuGSGNljdYDU0fvUAgNKsllkn3YK8GNPZoA\u002BGMuvldX2z"
       },
       "SirPixAlotWebAPI": {
-        "ConnectionString__PlaceHolder": "kgG8rQmTmk7T2ZtvvDT7duj3zi6SkMbqOKHpcTwv/SpydS6aa5w6"
+        "ConnectionString__PlaceHolder": "hV2ugCdSuGSGNljdYDU0fvUAgNKsllkn3YK8GNPZoA\u002BGMuvldX2z"
       }
     }
   },
