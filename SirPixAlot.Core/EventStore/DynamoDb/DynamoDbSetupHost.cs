@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace SirPixAlot.Core.EventStore
+namespace SirPixAlot.Core.EventStore.DynamoDb
 {
-    public class SetupHost(ILogger<SetupHost> logger, IOptions<EventStoreConfig> options, IAmazonDynamoDB amazonDynamoDBClient) : IHostedService
+    public class DynamoDbSetupHost(ILogger<DynamoDbSetupHost> logger, IOptions<DynamoDbEventStoreConfig> options, IAmazonDynamoDB amazonDynamoDBClient) : IHostedService
     {
         public Task StartAsync(CancellationToken cancellationToken)
         {

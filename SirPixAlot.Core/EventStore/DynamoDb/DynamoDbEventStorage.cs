@@ -12,17 +12,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SirPixAlot.Core.EventStore
+namespace SirPixAlot.Core.EventStore.DynamoDb
 {
-    public interface IEventStorage
-    {
-        Task<List<Event>> ReadEvents(string grainId, int version);
-        Task<bool> SaveEvents(IReadOnlyCollection<Event> events);
-    }
 
-    public class EventStorage(ILogger<EventStorage> logger, IOptions<EventStoreConfig> options, IAmazonDynamoDB amazonDynamoDBClient, SirPixAlotMetrics sirPixAlotMetrics) : IEventStorage
+    public class DynamoDbEventStorage(ILogger<DynamoDbEventStorage> logger, IOptions<DynamoDbEventStoreConfig> options, IAmazonDynamoDB amazonDynamoDBClient, SirPixAlotMetrics sirPixAlotMetrics) : IEventStorage
     {
-        
+
 
         public async Task<bool> SaveEvents(IReadOnlyCollection<Event> events)
         {
@@ -81,6 +76,7 @@ namespace SirPixAlot.Core.EventStore
 
         public async Task<List<Event>> ReadEvents(string grainId, int version)
         {
+
             var stopwatch = Stopwatch.StartNew();
             string tableName = options.Value.Table;
             logger.LogInformation("Read events {TableName} table", tableName);
@@ -96,7 +92,7 @@ namespace SirPixAlot.Core.EventStore
                             {
                                 S = grainId
                             }
-                        } 
+                        }
                     }
                 };
                 var response = await amazonDynamoDBClient.QueryAsync(query);
