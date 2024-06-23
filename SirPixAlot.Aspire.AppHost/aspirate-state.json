@@ -3,7 +3,7 @@
   "outputPath": "aspirate-output",
   "containerRegistry": "docker.io",
   "containerImageTags": [
-    "1.0.1.1"
+    "1.0.1.2"
   ],
   "containerBuilder": "docker",
   "containerRepositoryPrefix": "vic0111",
