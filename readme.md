@@ -6,7 +6,9 @@
 
 ### TODO's
 - Apply the CQRS patter
-- Enable multi silo?
+  - This would optimize read operations
+- Enable multi silo.
+  - Orleans essential feature. This would allow the app to scale.
 
 
 
