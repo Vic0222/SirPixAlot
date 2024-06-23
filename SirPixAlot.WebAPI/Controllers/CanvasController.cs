@@ -32,16 +32,17 @@ namespace SirPixAlot.WebAPI.Controllers
         public async Task<IActionResult> Get(long topLeftX, long topLeftY, long bottomRightX, long bottomRightY)
         {
             //var pixel = grainFactory.GetGrain<IPixelGrain>(x, y.ToString());
-            var pixelDtos = new List<PixelDto>();
+            var pixelDtoTasks = new List<Task<PixelDto>>();
             for (var x = topLeftX; x <= bottomRightX; x++) 
             { 
                 for (var y = bottomRightY; y <= topLeftY; y++)
                 {
-                    var pixelDto = await GetPixelDto(grainFactory, x, y);
-                    pixelDtos.Add(pixelDto);
+                    var pixelDtoTask = GetPixelDto(grainFactory, x, y);
+                    pixelDtoTasks.Add(pixelDtoTask);
                 }
             }
-            return Ok(pixelDtos);
+            await Task.WhenAll(pixelDtoTasks);
+            return Ok(pixelDtoTasks.Select(t => t.Result));
         }
 
         [HttpPut]

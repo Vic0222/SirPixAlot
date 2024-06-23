@@ -4,7 +4,7 @@
     "Registry": "docker.io",
     "RepositoryPrefix": "vic0111",
     "Tags": [
-      "latest"
+      "1.0.1.0"
     ],
     "Builder": "docker"
   }

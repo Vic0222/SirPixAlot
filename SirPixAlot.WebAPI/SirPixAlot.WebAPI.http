@@ -1,12 +1,17 @@
 ###
 #@HostAddress = http://localhost:7037
-@HostAddress = http://13.251.68.209:80
+@HostAddress = http://172.104.37.82
 GET {{HostAddress}}/weatherforecast
 Accept: application/json
 
 ###
 GET {{HostAddress}}/api/canvas?x=0&y=0
 Accept: application/json
+
+###
+GET {{HostAddress}}/api/canvas/rectangle?topLeftX=0&topLeftY=0&bottomRightX=10&bottomRightY=-10
+Accept: application/json
+Origin: localhost:90
 
 ###
 PUT {{HostAddress}}/api/canvas
@@ -16,5 +21,5 @@ Content-Type: application/json
 {
   "x":0,
   "y":0,
-  "color": "#AA33FF"
+  "color": "#AA00FF"
 }

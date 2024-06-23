@@ -34,7 +34,17 @@ builder.Host.UseOrleans(static async siloBuilder =>
 
 });
 
-// Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 
 //builder.Services.AddHostedService<DynamoDbSetupHost>();
 builder.Services.AddHostedService<LibsqlSetupHost>();
@@ -54,7 +64,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-
+app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
