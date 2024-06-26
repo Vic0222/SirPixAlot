@@ -18,7 +18,7 @@ namespace SirPixAlot.Core.EventStore.Libsql
             var result = await  Task.Factory.StartNew(() =>
             {
                 using var connection = sqliteConnectionProvider.GetConnection();
-                return connection.Query<Event>("SELECT `grain_id` as GrainId, `version` as Version, global_position as GlobalPosition, `event_type` as EventType, `data` as Data FROM  `pixel_grains` where `grain_id` = @grainId order by version desc", new { grainId});
+                return connection.Query<Event>("SELECT `grain_id` as GrainId, `version` as Version, global_position as GlobalPosition, `event_type` as EventType, `data` as Data FROM  `canvas_grains` where `grain_id` = @grainId order by version desc", new { grainId});
             },
             CancellationToken.None,
             TaskCreationOptions.RunContinuationsAsynchronously,
@@ -41,7 +41,7 @@ namespace SirPixAlot.Core.EventStore.Libsql
                 //validate there's no version conflict
                 var graindId = events.FirstOrDefault()?.GrainId ?? string.Empty;
                 var versions = events.Select(e => e.Version).ToHashSet();
-                var countResult = await databaseClient.Execute($"SELECT COUNT(*) FROM `pixel_grains` where `grain_id` = '{graindId}' and `version` in ({string.Join(',', versions)}) ");
+                var countResult = await databaseClient.Execute($"SELECT COUNT(*) FROM `canvas_grains` where `grain_id` = '{graindId}' and `version` in ({string.Join(',', versions)}) ");
                 var count = ToCount(countResult.Rows.First());
                 if (count > 0)
                 {
@@ -54,7 +54,7 @@ namespace SirPixAlot.Core.EventStore.Libsql
                 //But sadly it's not yet supported by the current libsql client.
                 foreach (var e in events)
                 {
-                    var result = await databaseClient.Execute($"INSERT INTO `pixel_grains` (`grain_id`, `version`, `global_position`, `event_type`, `data`) " +
+                    var result = await databaseClient.Execute($"INSERT INTO `canvas_grains` (`grain_id`, `version`, `global_position`, `event_type`, `data`) " +
                     $"VALUES ('{e.GrainId}', {e.Version}, '{e.GlobalPosition}', '{e.EventType}', '{e.Data}')");
 
                 }

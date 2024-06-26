@@ -20,13 +20,26 @@ namespace SirPixAlot.WebAPI.Controllers
 
         private static async Task<PixelDto> GetPixelDto(IGrainFactory grainFactory, long x, long y)
         {
-            var pixel = grainFactory.GetGrain<IPixelGrain>(x, y.ToString());
+            var canvas = grainFactory.GetGrain<ICanvasGrain>(GetCanvasIdFromPixel(x, y));
+            var pixel = await canvas.GetPixel(x, y);
             return new PixelDto
             {
                 X = x,
                 Y = y,
-                Color = await pixel.GetColor()
+                Color = pixel?.Color ?? "#FFFFFF"
             };
+        }
+
+        private static string GetCanvasIdFromPixel(long x, long y)
+        {
+            const double canvas_size = 100;
+            long topleftX = (long)(Math.Floor(x / canvas_size) * canvas_size);
+            long topleftY = (long)(Math.Ceiling(y / canvas_size) * canvas_size);
+
+            long bottomRightX = (long)(Math.Floor(x / canvas_size) * canvas_size) + (long)canvas_size - 1;
+            long bottomRightY = (long)(Math.Ceiling(y / canvas_size) * canvas_size) - (long)canvas_size + 1;
+
+            return $"{topleftX}:{topleftY},{bottomRightX}:{bottomRightY}";
         }
 
         [HttpGet("rectangle")]
@@ -78,13 +91,14 @@ namespace SirPixAlot.WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(PixelDto pixel)
         {
-            var pixelGrain = grainFactory.GetGrain<IPixelGrain>(pixel.X, pixel.Y.ToString());
-            bool success = await pixelGrain.ChangeColor(pixel.Color);
+            var pixelGrain = grainFactory.GetGrain<ICanvasGrain>(GetCanvasIdFromPixel(pixel.X, pixel.Y));
+            bool success = await pixelGrain.ChangePixelColor(pixel.X, pixel.Y, pixel.Color);
+            var savedPixel = await pixelGrain.GetPixel(pixel.X, pixel.Y);
             PixelDto pixelDto = new PixelDto
             {
                 X = pixel.X,
                 Y = pixel.Y,
-                Color = await pixelGrain.GetColor()
+                Color = savedPixel.Color,
             };
 
             if (!success)

@@ -5,7 +5,7 @@ GET {{HostAddress}}/weatherforecast
 Accept: application/json
 
 ###
-GET {{HostAddress}}/api/canvas?x=0&y=0
+GET {{HostAddress}}/api/canvas/pixel?x=0&y=0
 Accept: application/json
 
 ###
