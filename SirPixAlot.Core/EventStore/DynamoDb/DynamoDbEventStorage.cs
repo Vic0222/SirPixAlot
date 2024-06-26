@@ -74,7 +74,7 @@ namespace SirPixAlot.Core.EventStore.DynamoDb
             return true;
         }
 
-        public async Task<List<Event>> ReadEvents(string grainId, int version)
+        public async Task<IEnumerable<Event>> ReadEvents(string grainId, int version)
         {
 
             var stopwatch = Stopwatch.StartNew();

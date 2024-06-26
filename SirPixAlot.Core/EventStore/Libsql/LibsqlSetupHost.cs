@@ -20,6 +20,8 @@ namespace SirPixAlot.Core.EventStore.Libsql
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            //move this to a stateless grain
+            //so each silo has it's own copy
             while (await _timer.WaitForNextTickAsync(stoppingToken))
             {
                 await databaseClient.Sync();

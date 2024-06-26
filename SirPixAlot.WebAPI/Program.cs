@@ -6,6 +6,7 @@ using Orleans.Storage;
 using SirPixAlot.Core.EventStore;
 using SirPixAlot.Core.EventStore.DynamoDb;
 using SirPixAlot.Core.EventStore.Libsql;
+using SirPixAlot.Core.Infrastructure;
 using SirPixAlot.Core.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,9 @@ builder.Host.UseOrleans(static async siloBuilder =>
         siloBuilder.Configuration.GetSection("LibsqlDatabaseClientOptions").Bind(option);
         //option.UseHttps = false;
     });
+    siloBuilder.Services.AddSingleton<ISqliteConnectionProvider>(svc
+        => new SqliteConnectionProvider(siloBuilder.Configuration.GetConnectionString("Sqlite") ?? string.Empty));
+
     siloBuilder.Services.AddSingleton(libsqlDbClient);
     siloBuilder.Services.AddSingleton<IEventStorage, LibqsqlEventStorage>();
 

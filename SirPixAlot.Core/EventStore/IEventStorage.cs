@@ -2,7 +2,7 @@
 {
     public interface IEventStorage
     {
-        Task<List<Event>> ReadEvents(string grainId, int version);
+        Task<IEnumerable<Event>> ReadEvents(string grainId, int version);
         Task<bool> SaveEvents(IReadOnlyCollection<Event> events);
     }
 }

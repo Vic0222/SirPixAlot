@@ -3,6 +3,7 @@
   "outputPath": "aspirate-output",
   "containerRegistry": "docker.io",
   "containerImageTags": [
+    "latest",
     "1.0.1.2"
   ],
   "containerBuilder": "docker",
@@ -29,7 +30,11 @@
         "value": "hV2ugCdSuGSGNljdYDU0fvUAgNKsllkn3YK8GNPZoA\u002BGMuvldX2z"
       },
       "SirPixAlotWebAPI": {
-        "ConnectionString__PlaceHolder": "hV2ugCdSuGSGNljdYDU0fvUAgNKsllkn3YK8GNPZoA\u002BGMuvldX2z"
+        "ConnectionString__PlaceHolder": "hV2ugCdSuGSGNljdYDU0fvUAgNKsllkn3YK8GNPZoA\u002BGMuvldX2z",
+        "ConnectionStrings__Sqlite": "hV2ugCdSuGSGNljd93vnZlADyEpHR8NnIhySl8fUtQ3DKev8Y3ukuEK5ywk\u002BFJ7\u002BAhS7YEPz4BFWrNFXZoJTTWuL2D6hKwlvy6LN"
+      },
+      "ConnectionString-Sqlite": {
+        "value": "hV2ugCdSuGSGNljd93vnZlADyEpHR8NnIhySl8fUtQ3DKev8Y3ukuEK5ywk\u002BFJ7\u002BAhS7YEPz4BFWrNFXZoJTTWuL2D6hKwlvy6LN"
       }
     }
   },

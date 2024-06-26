@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.203.2" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Libsql.Client" Version="0.4.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.6" />
     <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="8.1.0" />
     <PackageReference Include="Microsoft.Orleans.EventSourcing" Version="8.1.0" />
     <PackageReference Include="Microsoft.Orleans.Sdk" Version="8.1.0" />

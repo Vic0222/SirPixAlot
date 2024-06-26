@@ -1,29 +1,34 @@
 ﻿using Libsql.Client;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using lql = Libsql.Client;
+using Dapper;
+using SirPixAlot.Core.Infrastructure;
 
 namespace SirPixAlot.Core.EventStore.Libsql
 {
-    public class LibqsqlEventStorage(IDatabaseClient databaseClient, ILogger<LibqsqlEventStorage> logger) : IEventStorage
+    public class LibqsqlEventStorage(IDatabaseClient databaseClient, ISqliteConnectionProvider sqliteConnectionProvider, ILogger<LibqsqlEventStorage> logger) : IEventStorage
     {
-        public async Task<List<Event>> ReadEvents(string grainId, int version)
+        private readonly TaskScheduler _scheduler = new ConcurrentExclusiveSchedulerPair(TaskScheduler.Default, maxConcurrencyLevel: 1).ExclusiveScheduler;
+
+        //There's a chance this operation causes thread starvation due to libsql/sqlite being sync, but the sdk is using Task.Run.
+        public async Task<IEnumerable<Event>> ReadEvents(string grainId, int version)
         {
-            var result = await databaseClient.Execute($"SELECT `grain_id`, `version`, cast(  `global_position` as text), `event_type`, `data` FROM  `pixel_grains` where `grain_id` = '{grainId}'");
-            return result.Rows.Select(ToEvent).ToList();
+            var result = await  Task.Factory.StartNew(() =>
+            {
+                using var connection = sqliteConnectionProvider.GetConnection();
+                return connection.Query<Event>("SELECT `grain_id` as GrainId, `version` as Version, global_position as GlobalPosition, `event_type` as EventType, `data` as Data FROM  `pixel_grains` where `grain_id` = @grainId", new { grainId});
+            },
+            CancellationToken.None,
+            TaskCreationOptions.RunContinuationsAsynchronously,
+            _scheduler);
+
+            return result;
         }
 
         public async Task<bool> SaveEvents(IReadOnlyCollection<Event> events)
         {
             try
             {
-
-
-                //throw new NotImplementedException();
                 if (events.Count == 0)
                 {
                     return false;
