@@ -3,6 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Dapper;
 using SirPixAlot.Core.Infrastructure;
+using System.Diagnostics;
 
 namespace SirPixAlot.Core.EventStore.Libsql
 {
@@ -13,15 +14,18 @@ namespace SirPixAlot.Core.EventStore.Libsql
         //There's a chance this operation causes thread starvation due to libsql/sqlite being sync, but the sdk is using Task.Run.
         public async Task<IEnumerable<Event>> ReadEvents(string grainId, int version)
         {
+            var stopwatch = Stopwatch.StartNew();
             var result = await  Task.Factory.StartNew(() =>
             {
                 using var connection = sqliteConnectionProvider.GetConnection();
-                return connection.Query<Event>("SELECT `grain_id` as GrainId, `version` as Version, global_position as GlobalPosition, `event_type` as EventType, `data` as Data FROM  `pixel_grains` where `grain_id` = @grainId", new { grainId});
+                return connection.Query<Event>("SELECT `grain_id` as GrainId, `version` as Version, global_position as GlobalPosition, `event_type` as EventType, `data` as Data FROM  `pixel_grains` where `grain_id` = @grainId order by version desc", new { grainId});
             },
             CancellationToken.None,
             TaskCreationOptions.RunContinuationsAsynchronously,
             _scheduler);
+            stopwatch.Stop();
 
+            logger.LogInformation("Reading events took {ReadEventsDuration} milliseconds", stopwatch.ElapsedMilliseconds);
             return result;
         }
 
