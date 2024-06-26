@@ -31,10 +31,16 @@
       },
       "SirPixAlotWebAPI": {
         "ConnectionString__PlaceHolder": "hV2ugCdSuGSGNljdYDU0fvUAgNKsllkn3YK8GNPZoA\u002BGMuvldX2z",
-        "ConnectionStrings__Sqlite": "hV2ugCdSuGSGNljd93vnZlADyEpHR8NnIhySl8fUtQ3DKev8Y3ukuEK5ywk\u002BFJ7\u002BAhS7YEPz4BFWrNFXZoJTTWuL2D6hKwlvy6LN"
+        "ConnectionStrings__Sqlite": "hV2ugCdSuGSGNljd\u002BrDRGo43C962JCTrk8XQGbI="
       },
       "ConnectionString-Sqlite": {
         "value": "hV2ugCdSuGSGNljd93vnZlADyEpHR8NnIhySl8fUtQ3DKev8Y3ukuEK5ywk\u002BFJ7\u002BAhS7YEPz4BFWrNFXZoJTTWuL2D6hKwlvy6LN"
+      },
+      "PlaceHolder": {
+        "value": "hV2ugCdSuGSGNljdYDU0fvUAgNKsllkn3YK8GNPZoA\u002BGMuvldX2z"
+      },
+      "Sqlite": {
+        "value": "hV2ugCdSuGSGNljd\u002BrDRGo43C962JCTrk8XQGbI="
       }
     }
   },
