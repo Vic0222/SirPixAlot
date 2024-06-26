@@ -1,6 +1,6 @@
 ###
-@HostAddress = https://localhost:7037
-#@HostAddress = http://172.104.37.82
+#@HostAddress = https://localhost:7037
+@HostAddress = http://172.104.37.82
 GET {{HostAddress}}/weatherforecast
 Accept: application/json
 

@@ -1,0 +1,23 @@
+resources:
+- deployment.yaml
+- service.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- name: sirpixalotwebapi-env
+  literals:
+    - OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES=true
+    - OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES=true
+    - OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY=in_memory
+    - ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
+    - EventStoreConfig__Table=SirPixAlotGrainStorage
+    - AWS_REGION=ap-southeast-1
+    - LibsqlDatabaseClientOptions__ReplicaPath=/tmp/local_replica.db
+    - ASPNETCORE_URLS=http://+:8080;
+
+secretGenerator:
+- name: sirpixalotwebapi-secrets
+  envs:
+  - .sirpixalotwebapi.secrets

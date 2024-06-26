@@ -1,0 +1,7 @@
+resources:
+- SirPixAlotWebAPI
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+

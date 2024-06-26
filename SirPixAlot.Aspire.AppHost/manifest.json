@@ -1,0 +1,80 @@
+{
+  "resources": {
+    "EventStoreConfig-SirPixAlotGrainStorage": {
+      "type": "parameter.v0",
+      "value": "{EventStoreConfig-SirPixAlotGrainStorage.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "AwsRegion": {
+      "type": "parameter.v0",
+      "value": "{AwsRegion.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "LibsqlDatabaseClientOptions-ReplicaPath": {
+      "type": "parameter.v0",
+      "value": "{LibsqlDatabaseClientOptions-ReplicaPath.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "PlaceHolder": {
+      "type": "parameter.v0",
+      "connectionString": "{PlaceHolder.value}",
+      "value": "{PlaceHolder.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true
+        }
+      }
+    },
+    "Sqlite": {
+      "type": "parameter.v0",
+      "connectionString": "{Sqlite.value}",
+      "value": "{Sqlite.inputs.value}",
+      "inputs": {
+        "value": {
+          "type": "string",
+          "secret": true
+        }
+      }
+    },
+    "SirPixAlotWebAPI": {
+      "type": "project.v0",
+      "path": "../SirPixAlot.WebAPI/SirPixAlot.WebAPI.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
+        "EventStoreConfig__Table": "{EventStoreConfig-SirPixAlotGrainStorage.value}",
+        "ConnectionString__PlaceHolder": "{PlaceHolder.connectionString}",
+        "AWS_REGION": "{AwsRegion.value}",
+        "LibsqlDatabaseClientOptions__ReplicaPath": "{LibsqlDatabaseClientOptions-ReplicaPath.value}",
+        "ConnectionStrings__Sqlite": "{Sqlite.connectionString}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    }
+  }
+}

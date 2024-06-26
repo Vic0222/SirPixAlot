@@ -1,6 +1,7 @@
 using Amazon.DynamoDBv2;
 using Libsql.Client;
 using Microsoft.Extensions.DependencyInjection;
+using Orleans.Providers;
 using Orleans.Serialization;
 using Orleans.Storage;
 using SirPixAlot.Core.EventStore;
@@ -8,6 +9,7 @@ using SirPixAlot.Core.EventStore.DynamoDb;
 using SirPixAlot.Core.EventStore.Libsql;
 using SirPixAlot.Core.Infrastructure;
 using SirPixAlot.Core.Metrics;
+using SirPixAlot.Core.StateStore.Libsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +18,8 @@ builder.Host.UseOrleans(static async siloBuilder =>
 {
     
     siloBuilder.UseLocalhostClustering();
-    
-
+    //siloBuilder.AddMemoryGrainStorageAsDefault();
+    siloBuilder.AddLibsqlGrainStorage(ProviderConstants.DEFAULT_STORAGE_PROVIDER_NAME, options => { });
     siloBuilder.AddCustomStorageBasedLogConsistencyProviderAsDefault();
 
     //siloBuilder.Services.AddSingleton<IAmazonDynamoDB>(svc => new AmazonDynamoDBClient());
