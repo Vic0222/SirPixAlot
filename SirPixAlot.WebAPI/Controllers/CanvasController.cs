@@ -81,7 +81,7 @@ namespace SirPixAlot.WebAPI.Controllers
         }
 
         
-        [HttpPut]
+        [HttpPut("pixel")]
         public async Task<IActionResult> Put(PixelDto pixel)
         {
             var pixelGrain = grainFactory.GetGrain<ICanvasGrain>(GetCanvasIdFromPixel(pixel.X, pixel.Y));
@@ -91,7 +91,7 @@ namespace SirPixAlot.WebAPI.Controllers
             {
                 X = pixel.X,
                 Y = pixel.Y,
-                Color = savedPixel.Color,
+                Color = savedPixel?.Color ?? "#FFFFFF",
             };
 
             if (!success)
