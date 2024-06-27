@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Orleans.Runtime;
 using SirPixAlot.Core.DataTransferObjects;
 using SirPixAlot.Core.GrainInterfaces;
+using SirPixAlot.Core.Models;
 
 namespace SirPixAlot.WebAPI.Controllers
 {
@@ -10,8 +11,9 @@ namespace SirPixAlot.WebAPI.Controllers
     [ApiController]
     public class CanvasController(IGrainFactory grainFactory) : ControllerBase
     {
+        const double CANVAS_SIZE = 100;
 
-        [HttpGet]
+        [HttpGet("pixel")]
         public async Task<IActionResult> Get(long x, long y)
         {
             var dto = await GetPixelDto(grainFactory, x, y);
@@ -32,33 +34,50 @@ namespace SirPixAlot.WebAPI.Controllers
 
         private static string GetCanvasIdFromPixel(long x, long y)
         {
-            const double canvas_size = 100;
-            long topleftX = (long)(Math.Floor(x / canvas_size) * canvas_size);
-            long topleftY = (long)(Math.Ceiling(y / canvas_size) * canvas_size);
 
-            long bottomRightX = (long)(Math.Floor(x / canvas_size) * canvas_size) + (long)canvas_size - 1;
-            long bottomRightY = (long)(Math.Ceiling(y / canvas_size) * canvas_size) - (long)canvas_size + 1;
+            long topleftX = (long)(Math.Floor(x / CANVAS_SIZE) * CANVAS_SIZE);
+            long topleftY = (long)(Math.Ceiling(y / CANVAS_SIZE) * CANVAS_SIZE);
 
+            long bottomRightX = (long)(Math.Floor(x / CANVAS_SIZE) * CANVAS_SIZE) + (long)CANVAS_SIZE - 1;
+            long bottomRightY = (long)(Math.Ceiling(y / CANVAS_SIZE) * CANVAS_SIZE) - (long)CANVAS_SIZE + 1;
+
+            return GenerateCanvasId(topleftX, topleftY, bottomRightX, bottomRightY);
+        }
+
+        private static string GenerateCanvasId(long topleftX, long topleftY, long bottomRightX, long bottomRightY)
+        {
             return $"{topleftX}:{topleftY},{bottomRightX}:{bottomRightY}";
         }
 
-        [HttpGet("rectangle")]
+        [HttpGet]
         public async Task<IActionResult> Get(long topLeftX, long topLeftY, long bottomRightX, long bottomRightY)
         {
-            //We originally tried to get pxels at the same time here and used Task.WhenAll.
-            //But that seems to hammer the silo's too hard.
-            //So we do await here one by one to lessen load.
-            var pixelDtos = new List<PixelDto>();
-            for (var x = topLeftX; x <= bottomRightX; x++) 
-            { 
-                for (var y = bottomRightY; y <= topLeftY; y++)
+            long normalizeTopLeftX = (long)(Math.Floor(topLeftX / CANVAS_SIZE) * CANVAS_SIZE);
+            long normalizeTopLeftY = (long)(Math.Ceiling(topLeftY / CANVAS_SIZE) * CANVAS_SIZE);
+
+            long normalizeBottomRightX = (long)(Math.Floor(bottomRightX / CANVAS_SIZE) * CANVAS_SIZE);
+            long normalizeBottomRightY = (long)(Math.Ceiling(bottomRightY / CANVAS_SIZE) * CANVAS_SIZE);
+
+            var pixels = new List<Pixel>();
+
+            for (long x = normalizeTopLeftX; x <= normalizeBottomRightX; x+= (long)CANVAS_SIZE)
+            {
+                for (long y = normalizeBottomRightY; y <= normalizeTopLeftY; y+=(long)CANVAS_SIZE)
                 {
-                    var pixelDto = await GetPixelDto(grainFactory, x, y);
-                    pixelDtos.Add(pixelDto);
+                    long bottomX = x + (long)CANVAS_SIZE - 1;
+                    long bottomY = y - (long)CANVAS_SIZE + 1;
+                    var canvasId = GenerateCanvasId(x, y, bottomX, bottomY);
+                    var canvas = grainFactory.GetGrain<ICanvasGrain>(canvasId);
+                    pixels.AddRange(await canvas.GetPixels());
                 }
             }
 
-            return Ok(pixelDtos);
+
+            return Ok(pixels.Select(p => new PixelDto() {
+                X = p.X,
+                Y = p.Y,
+                Color = p.Color,
+            }).ToList());
         }
 
         [HttpGet("rectanglePerfTest")]

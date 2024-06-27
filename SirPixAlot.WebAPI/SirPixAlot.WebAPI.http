@@ -9,7 +9,7 @@ GET {{HostAddress}}/api/canvas/pixel?x=0&y=0
 Accept: application/json
 
 ###
-GET {{HostAddress}}/api/canvas/rectangle?topLeftX=0&topLeftY=0&bottomRightX=10&bottomRightY=-10
+GET {{HostAddress}}/api/canvas?topLeftX=0&topLeftY=0&bottomRightX=10&bottomRightY=-10
 Accept: application/json
 Origin: localhost:90
 
