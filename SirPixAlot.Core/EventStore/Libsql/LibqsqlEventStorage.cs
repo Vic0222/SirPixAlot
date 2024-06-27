@@ -18,7 +18,7 @@ namespace SirPixAlot.Core.EventStore.Libsql
             var result = await  Task.Factory.StartNew(() =>
             {
                 using var connection = sqliteConnectionProvider.GetConnection();
-                return connection.Query<Event>("SELECT `grain_id` as GrainId, `version` as Version, global_position as GlobalPosition, `event_type` as EventType, `data` as Data FROM  `canvas_grains` where `grain_id` = @grainId order by version desc", new { grainId});
+                return connection.Query<Event>("SELECT `grain_id` as GrainId, `version` as Version, global_position as GlobalPosition, `event_type` as EventType, `data` as Data FROM  `canvas_grains` where `grain_id` = @grainId order by version asc", new { grainId});
             },
             CancellationToken.None,
             TaskCreationOptions.RunContinuationsAsynchronously,

@@ -1,4 +1,5 @@
-﻿using Orleans.EventSourcing;
+﻿using Microsoft.Extensions.Logging;
+using Orleans.EventSourcing;
 using Orleans.EventSourcing.CustomStorage;
 using SirPixAlot.Core.EventStore;
 using SirPixAlot.Core.GrainInterfaces;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace SirPixAlot.Core.Grains
 {
-    public class CanvasGrain(IEventStorage eventStorage) : JournaledGrain<CanvasGrainState, ICanvasGrainEvent>, ICustomStorageInterface<CanvasGrainState, ICanvasGrainEvent>, ICanvasGrain
+    public class CanvasGrain(IEventStorage eventStorage, ILogger<CanvasGrain> logger) : JournaledGrain<CanvasGrainState, ICanvasGrainEvent>, ICustomStorageInterface<CanvasGrainState, ICanvasGrainEvent>, ICanvasGrain
     {
         public async Task<IEnumerable<Pixel>> GetPixels()
         {
@@ -64,7 +65,10 @@ namespace SirPixAlot.Core.Grains
             var events = await eventStorage.ReadEvents(this.GetGrainId().ToString(), Version);
             var rect = GetRect();
             var state = new CanvasGrainState();
+            var stopwatch = Stopwatch.StartNew();
             state.InitPixels(rect.topLeftX, rect.topLeftY, rect.bottomRightX, rect.bottomRightY);
+            stopwatch.Stop();
+            logger.LogInformation("Init Pixels Took {InitPixelsDuration} Milliseconds", stopwatch.ElapsedMilliseconds);
             int version = 0;
             foreach (var @event in events)
             {
@@ -132,12 +136,12 @@ namespace SirPixAlot.Core.Grains
 
         public CanvasGrainState()
         {
-            Pixels = Array.Empty<Pixel>();
+            Pixels = new List<Pixel>();
         }
 
         public CanvasGrainState(long topLeftX, long topLeftY, long bottomRightX, long bottomRightY)
         {
-            Pixels = Array.Empty<Pixel>();
+            Pixels = new List<Pixel>();
         }
 
         public void InitPixels(long topLeftX, long topLeftY, long bottomRightX, long bottomRightY)
@@ -147,10 +151,20 @@ namespace SirPixAlot.Core.Grains
             BottomRightX = bottomRightX;
             BottomRightY = bottomRightY;
 
-            for (long x = TopLeftX; x <= BottomRightX; x++) {
-                for (long y = TopLeftY; y >= BottomRightY; y++)
+            for (long x = TopLeftX; x <= BottomRightX; x++) 
+            {
+                for (long y = TopLeftY; y >= BottomRightY; y--)
                 {
-                    Pixels.Add(new Pixel(x, y, "#FFFFFF"));
+                    try
+                    {
+
+                        Pixels.Add(new Pixel(x, y, "#FFFFFF"));
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
                 }
             }
         }
