@@ -8,6 +8,9 @@ metadata:
 spec:
   rules:
     - http:
+        middlewares:
+          response-compress:
+            compress: {}
         paths:
           - path: /
             pathType: Prefix
