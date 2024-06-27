@@ -16,12 +16,3 @@ spec:
                 name:  sirpixalotwebapi
                 port:
                   number: 8080
-                  
----
-# Enable gzip compression
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: test-compress
-spec:
-  compress: {}
