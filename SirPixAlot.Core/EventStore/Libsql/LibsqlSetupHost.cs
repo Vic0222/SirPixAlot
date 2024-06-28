@@ -22,10 +22,11 @@ namespace SirPixAlot.Core.EventStore.Libsql
         {
             //move this to a stateless grain
             //so each silo has it's own copy
-            while (await _timer.WaitForNextTickAsync(stoppingToken))
-            {
-                await databaseClient.Sync();
-            }
+            //stop syncing for now, as the 3gb sync limit has been reached.
+            //while (await _timer.WaitForNextTickAsync(stoppingToken))
+            //{
+            //    await databaseClient.Sync();
+            //}
         }
     }
 }
