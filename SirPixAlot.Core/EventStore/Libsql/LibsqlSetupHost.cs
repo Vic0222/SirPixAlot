@@ -13,9 +13,9 @@ namespace SirPixAlot.Core.EventStore.Libsql
         private readonly PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromSeconds(30));
         public async override Task StartAsync(CancellationToken cancellationToken)
         {
-            await databaseClient.Sync();
             await databaseClient.Execute("CREATE TABLE IF NOT EXISTS `canvas_grains` (`grain_id` TEXT NOT NULL, `version` INTEGER NOT NULL, `global_position` BIGINT NOT NULL, `event_type` TEXT NOT NULL, `data` TEXT NOT NULL, PRIMARY KEY ( `grain_id`, `version`))");
-            
+
+            await databaseClient.Sync();
             await base.StartAsync(cancellationToken);
         }
 
