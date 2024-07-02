@@ -10,7 +10,7 @@ namespace SirPixAlot.Core.EventStore.Libsql
 {
     public class LibsqlSetupHost(IDatabaseClient databaseClient) : BackgroundService
     {
-        private readonly PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromSeconds(30));
+        private readonly PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromSeconds(60));
         public async override Task StartAsync(CancellationToken cancellationToken)
         {
             await databaseClient.Execute("CREATE TABLE IF NOT EXISTS `canvas_grains` (`grain_id` TEXT NOT NULL, `version` INTEGER NOT NULL, `global_position` BIGINT NOT NULL, `event_type` TEXT NOT NULL, `data` TEXT NOT NULL, PRIMARY KEY ( `grain_id`, `version`))");
@@ -24,10 +24,10 @@ namespace SirPixAlot.Core.EventStore.Libsql
             //move this to a stateless grain
             //so each silo has it's own copy
             //stop syncing for now, as the 3gb sync limit has been reached.
-            //while (await _timer.WaitForNextTickAsync(stoppingToken))
-            //{
-            //    await databaseClient.Sync();
-            //}
+            while (await _timer.WaitForNextTickAsync(stoppingToken))
+            {
+                await databaseClient.Sync();
+            }
         }
     }
 }
