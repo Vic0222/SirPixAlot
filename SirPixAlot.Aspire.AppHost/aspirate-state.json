@@ -1,12 +1,13 @@
 {
   "projectPath": ".",
-  "templatePath": "./Templates",
   "outputPath": "aspirate-output",
   "containerRegistry": "docker.io",
   "containerImageTags": [
+    "latest",
     "1.0.2.0"
   ],
   "containerBuilder": "docker",
+  "templatePath": "./Templates",
   "containerRepositoryPrefix": "vic0111",
   "outputFormat": "kustomize",
   "skipFinalKustomizeGeneration": false,

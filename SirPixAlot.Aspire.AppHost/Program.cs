@@ -13,7 +13,8 @@ sirPixAlotWebAPI.WithEnvironment("EventStoreConfig__Table", grainStorage);
 sirPixAlotWebAPI.WithEnvironment("ConnectionString__PlaceHolder", secretsPlaceHolder);
 sirPixAlotWebAPI.WithEnvironment("AWS_REGION", awsRegion);
 sirPixAlotWebAPI.WithEnvironment("LibsqlDatabaseClientOptions__ReplicaPath", libsqlReplicaPath);
-sirPixAlotWebAPI.WithEnvironment("ConnectionStrings__Sqlite", connectionStringSqlite);
-sirPixAlotWebAPI.WithEndpoint(11111);
+sirPixAlotWebAPI.WithEnvironment("ConnectionStrings__Sqlite", connectionStringSqlite); 
+sirPixAlotWebAPI.WithEndpoint(targetPort: 11111, isExternal: false);
+sirPixAlotWebAPI.WithEndpoint(targetPort: 30000, isExternal: false);
 
 builder.Build().Run();
