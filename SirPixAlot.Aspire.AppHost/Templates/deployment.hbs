@@ -57,9 +57,9 @@ spec:
 {{/if}}
         env:
         - name: ORLEANS_SERVICE_ID
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.labels['orleans/serviceId']
+        valueFrom:
+            fieldRef:
+            fieldPath: metadata.labels['orleans/serviceId']
         - name: ORLEANS_CLUSTER_ID
         valueFrom:
             fieldRef:
