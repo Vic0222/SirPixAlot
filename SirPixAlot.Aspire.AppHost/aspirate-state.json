@@ -1,5 +1,6 @@
 {
   "projectPath": ".",
+  "templatePath": "./Templates",
   "outputPath": "aspirate-output",
   "containerRegistry": "docker.io",
   "containerImageTags": [

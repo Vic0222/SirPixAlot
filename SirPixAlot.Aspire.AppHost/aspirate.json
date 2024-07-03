@@ -1,5 +1,5 @@
 {
-  "TemplatePath": null,
+  "TemplatePath": "./Templates",
   "ContainerSettings": {
     "Registry": "docker.io",
     "RepositoryPrefix": "vic0111",
