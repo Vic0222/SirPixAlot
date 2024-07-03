@@ -4,19 +4,31 @@ using Microsoft.Extensions.DependencyInjection;
 using Orleans.Serialization;
 using Orleans.Storage;
 using SirPixAlot.Core.EventStore;
-using SirPixAlot.Core.EventStore.DynamoDb;
 using SirPixAlot.Core.EventStore.Libsql;
 using SirPixAlot.Core.Infrastructure;
 using SirPixAlot.Core.Metrics;
+using Orleans.Clustering.DynamoDB;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var environment = builder.Environment.IsDevelopment();
 // Add orleans
 builder.Host.UseOrleans(static async siloBuilder =>
 {
-    
-    siloBuilder.UseLocalhostClustering();
-    
+    var awsAccesskey = siloBuilder.Configuration["AWS_ACCESS_KEY_ID"];
+    var awsSecretKey = siloBuilder.Configuration["AWS_SECRET_ACCESS_KEY"];
+    if (!string.IsNullOrEmpty(awsAccesskey) && !string.IsNullOrEmpty(awsSecretKey))
+    {
+        siloBuilder.UseDynamoDBClustering(options => {
+            options.AccessKey = siloBuilder.Configuration["AWS_ACCESS_KEY_ID"];
+            options.SecretKey = siloBuilder.Configuration["AWS_SECRET_ACCESS_KEY"];
+            options.Service = siloBuilder.Configuration["AWS_DEFAULT_REGION"];
+        });
+    }
+    else
+    {
+        siloBuilder.UseLocalhostClustering();
+    }
 
     siloBuilder.AddCustomStorageBasedLogConsistencyProviderAsDefault();
 
