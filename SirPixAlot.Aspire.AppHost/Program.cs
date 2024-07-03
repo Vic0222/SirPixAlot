@@ -14,7 +14,7 @@ sirPixAlotWebAPI.WithEnvironment("ConnectionString__PlaceHolder", secretsPlaceHo
 sirPixAlotWebAPI.WithEnvironment("AWS_REGION", awsRegion);
 sirPixAlotWebAPI.WithEnvironment("LibsqlDatabaseClientOptions__ReplicaPath", libsqlReplicaPath);
 sirPixAlotWebAPI.WithEnvironment("ConnectionStrings__Sqlite", connectionStringSqlite); 
-sirPixAlotWebAPI.WithEndpoint(targetPort: 11111, isExternal: false);
-sirPixAlotWebAPI.WithEndpoint(targetPort: 30000, isExternal: false);
+sirPixAlotWebAPI.WithEndpoint(name: "orleans1", targetPort: 11111, isExternal: false);
+sirPixAlotWebAPI.WithEndpoint(name: "orleans2",targetPort: 30000, isExternal: false);
 
 builder.Build().Run();
