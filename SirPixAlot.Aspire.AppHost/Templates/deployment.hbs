@@ -6,7 +6,6 @@ metadata:
   labels:
     app: {{name}}
     orleans/serviceId: {{name}}
-    orleans/clusterId: {{name}}
 {{#if hasAnyAnnotations}}
   annotations:
 {{#each annotations}}
@@ -19,12 +18,15 @@ spec:
   selector:
     matchLabels:
       app: {{name}}
+      orleans/serviceId: {{name}}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: {{name}}
+        orleans/serviceId: {{name}}
+        orleans/clusterId: {{name}}
 {{#if hasAnyAnnotations}}
       annotations:
 {{#each annotations}}
