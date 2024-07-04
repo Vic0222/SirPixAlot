@@ -24,6 +24,11 @@ builder.Host.UseOrleans(static async siloBuilder =>
             options.AccessKey = siloBuilder.Configuration["AWS_ACCESS_KEY_ID"];
             options.SecretKey = siloBuilder.Configuration["AWS_SECRET_ACCESS_KEY"];
             options.Service = siloBuilder.Configuration["AWS_DEFAULT_REGION"];
+            
+            if (!string.IsNullOrEmpty(siloBuilder.Configuration["DynamoDBClusteringOptions:TableName"]))
+            {
+                options.TableName = siloBuilder.Configuration["DynamoDBClusteringOptions:TableName"];
+            }
         });
     }
     else
