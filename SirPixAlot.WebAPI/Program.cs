@@ -19,7 +19,7 @@ builder.Host.UseOrleans(static async siloBuilder =>
     var awsSecretKey = siloBuilder.Configuration["AWS_SECRET_ACCESS_KEY"];
     if (!string.IsNullOrEmpty(awsAccesskey) && !string.IsNullOrEmpty(awsSecretKey))
     {
-        siloBuilder.UseKubernetesHosting();
+        //siloBuilder.UseKubernetesHosting();
         siloBuilder.UseDynamoDBClustering(options => {
             options.AccessKey = siloBuilder.Configuration["AWS_ACCESS_KEY_ID"];
             options.SecretKey = siloBuilder.Configuration["AWS_SECRET_ACCESS_KEY"];
