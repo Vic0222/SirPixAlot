@@ -59,6 +59,10 @@ builder.Host.UseOrleans(static async siloBuilder =>
 var libsqlDbClient = await DatabaseClient.Create(option =>
 {
     builder.Configuration.GetSection("LibsqlDatabaseClientOptions").Bind(option);
+    if (string.IsNullOrEmpty(option.ReplicaPath)) //the turso client throws an error if replica path is empty instead of null
+    {
+        option.ReplicaPath = null;
+    }
     //option.UseHttps = false;
 });
 builder.Services.AddSingleton<ISqliteConnectionProvider>(svc
