@@ -9,6 +9,8 @@ using SirPixAlot.Core.Infrastructure;
 using SirPixAlot.Core.Metrics;
 using Orleans.Clustering.DynamoDB;
 using Microsoft.Extensions.Options;
+using Orleans.Configuration;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 var environment = builder.Environment.IsDevelopment();
@@ -17,6 +19,15 @@ builder.Host.UseOrleans(static async siloBuilder =>
 {
     var awsAccesskey = siloBuilder.Configuration["AWS_ACCESS_KEY_ID"];
     var awsSecretKey = siloBuilder.Configuration["AWS_SECRET_ACCESS_KEY"];
+    if (!string.IsNullOrEmpty(siloBuilder.Configuration["FLY_PUBLIC_IP"])) //this means we are running in fly.io
+    {
+        siloBuilder.Configure<EndpointOptions>(options =>
+        {
+            options.AdvertisedIPAddress = IPAddress.Parse(siloBuilder.Configuration["FLY_PUBLIC_IP"]);
+        });
+    }
+    
+
     if (!string.IsNullOrEmpty(awsAccesskey) && !string.IsNullOrEmpty(awsSecretKey))
     {
         //siloBuilder.UseKubernetesHosting();
