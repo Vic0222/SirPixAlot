@@ -33,23 +33,25 @@ builder.Host.UseOrleans(static async siloBuilder =>
 
     siloBuilder.AddCustomStorageBasedLogConsistencyProviderAsDefault();
 
-    //siloBuilder.Services.AddSingleton<IAmazonDynamoDB>(svc => new AmazonDynamoDBClient());
-    //siloBuilder.Services.AddSingleton<IEventStorage, DynamoDbEventStorage>();
-    //siloBuilder.Services.Configure<DynamoDbEventStoreConfig>(siloBuilder.Configuration.GetSection("EventStoreConfig"));
-    var libsqlDbClient = await DatabaseClient.Create(option =>
-    {
-        siloBuilder.Configuration.GetSection("LibsqlDatabaseClientOptions").Bind(option);
-        //option.UseHttps = false;
-    });
-    siloBuilder.Services.AddSingleton<ISqliteConnectionProvider>(svc
-        => new SqliteConnectionProvider(siloBuilder.Configuration.GetConnectionString("Sqlite") ?? string.Empty));
-
-    siloBuilder.Services.AddSingleton(libsqlDbClient);
-    siloBuilder.Services.AddSingleton<IEventStorage, LibqsqlEventStorage>();
-
-    siloBuilder.Services.AddSingleton<SirPixAlotMetrics>();
+   
 
 });
+
+//siloBuilder.Services.AddSingleton<IAmazonDynamoDB>(svc => new AmazonDynamoDBClient());
+//siloBuilder.Services.AddSingleton<IEventStorage, DynamoDbEventStorage>();
+//siloBuilder.Services.Configure<DynamoDbEventStoreConfig>(siloBuilder.Configuration.GetSection("EventStoreConfig"));
+var libsqlDbClient = await DatabaseClient.Create(option =>
+{
+    builder.Configuration.GetSection("LibsqlDatabaseClientOptions").Bind(option);
+    //option.UseHttps = false;
+});
+builder.Services.AddSingleton<ISqliteConnectionProvider>(svc
+    => new SqliteConnectionProvider(builder.Configuration.GetConnectionString("Sqlite") ?? string.Empty));
+
+builder.Services.AddSingleton(libsqlDbClient);
+builder.Services.AddSingleton<IEventStorage, LibqsqlEventStorage>();
+
+builder.Services.AddSingleton<SirPixAlotMetrics>();
 
 builder.Services.AddCors(options =>
 {
