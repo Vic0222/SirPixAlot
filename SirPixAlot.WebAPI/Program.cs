@@ -19,11 +19,11 @@ builder.Host.UseOrleans(static async siloBuilder =>
 {
     var awsAccesskey = siloBuilder.Configuration["AWS_ACCESS_KEY_ID"];
     var awsSecretKey = siloBuilder.Configuration["AWS_SECRET_ACCESS_KEY"];
-    if (!string.IsNullOrEmpty(siloBuilder.Configuration["FLY_PUBLIC_IP"])) //this means we are running in fly.io
+    if (!string.IsNullOrEmpty(siloBuilder.Configuration["FLY_PRIVATE_IP"])) //this means we are running in fly.io
     {
         siloBuilder.Configure<EndpointOptions>(options =>
         {
-            options.AdvertisedIPAddress = IPAddress.Parse(siloBuilder.Configuration["FLY_PUBLIC_IP"]);
+            options.AdvertisedIPAddress = IPAddress.Parse(siloBuilder.Configuration["FLY_PRIVATE_IP"]);
         });
     }
     
